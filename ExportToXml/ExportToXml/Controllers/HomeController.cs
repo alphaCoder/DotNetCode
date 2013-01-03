@@ -4,29 +4,23 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
+using ExportToXml.Utilities;
 namespace ExportToXml.Controllers
 {
     public class HomeController : Controller
     {
         public ActionResult Index()
         {
-            ViewBag.Message = "Modify this template to jump-start your ASP.NET MVC application.";
-
             return View();
         }
 
-        public ActionResult About()
+        public virtual FileResult DownloadXmlFile()
         {
-            ViewBag.Message = "Your app description page.";
-
-            return View();
+            var testFile = GenerateXML.GetXML();
+            var utf8Bytes = testFile.ToUTF8Bytes();
+            var file = File(utf8Bytes, "text/plain", "ExportToXml.xml");
+            return file;
         }
 
-        public ActionResult Contact()
-        {
-            ViewBag.Message = "Your contact page.";
-
-            return View();
-        }
     }
 }
