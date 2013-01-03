@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 
 using ExportToXml.Utilities;
+using System.Text;
 namespace ExportToXml.Controllers
 {
     public class HomeController : Controller
@@ -16,9 +17,9 @@ namespace ExportToXml.Controllers
 
         public virtual FileResult DownloadXmlFile()
         {
+            var encoding = new ASCIIEncoding();
             var testFile = GenerateXML.GetXML();
-            var utf8Bytes = testFile.ToUTF8Bytes();
-            var file = File(utf8Bytes, "text/plain", "ExportToXml.xml");
+            var file = File(encoding.GetBytes(testFile), "text/plain", "ExportToXml.xml");
             return file;
         }
 
